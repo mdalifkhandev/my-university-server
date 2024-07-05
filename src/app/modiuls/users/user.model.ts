@@ -1,9 +1,9 @@
 import { Schema, model } from 'mongoose';
-import { TUser } from './user.interfach';
+import { TUser, UserModel } from './user.interfach';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 
-const userSchme = new Schema<TUser>(
+const userSchema = new Schema<TUser>(
   {
     id: {
       type: String,
@@ -18,6 +18,9 @@ const userSchme = new Schema<TUser>(
       type: Boolean,
       required: true,
       default: true,
+    },
+    passwordChangedAt:{
+type:Date
     },
     role: {
       type: String,
@@ -42,7 +45,7 @@ const userSchme = new Schema<TUser>(
 );
 
 // pre save middlewere hook
-userSchme.pre('save', async function (next) {
+userSchema.pre('save', async function (next) {
   // console.log(this,'pre hooks:this is save data');
   this.password = await bcrypt.hash(
     this.password,
@@ -52,10 +55,34 @@ userSchme.pre('save', async function (next) {
 });
 
 // post save middlewere hook
-userSchme.post('save', function (doc, next) {
+userSchema.post('save', function (doc, next) {
   doc.password = '';
   // console.log(this,'post hooks:this is save data');
   next();
 });
 
-export const User = model<TUser>('Users', userSchme);
+// userSchme.statics.isUserExistsByCustomId = async function (id: string) {
+//   return await User.findOne({ id }).select('+password');
+// };
+userSchema.statics.isUserExistsByCustomId=async function (id:string) {
+  return await User.findOne({id}).select('+password')
+}
+
+// userSchme.statics.isPasswordMatched = async function (
+//   plainTextPassword,
+//   hashedPassword,
+// ) {
+//   return await bcrypt.compare(plainTextPassword, hashedPassword);
+// };
+
+
+userSchema.statics.isJWTIssuedBeforePasswordChanged = function (
+  passwordChangedTimestamp: Date,
+  jwtIssuedTimestamp: number,
+) {
+  const passwordChangedTime =
+    new Date(passwordChangedTimestamp).getTime() / 1000;
+  return passwordChangedTime > jwtIssuedTimestamp;
+};
+
+export const User = model<TUser,UserModel>('Users', userSchema);
