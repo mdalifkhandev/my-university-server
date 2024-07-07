@@ -1,5 +1,4 @@
-import { TBloodGroup, TGender } from "./faculty.interfach";
-
+import { TBloodGroup, TGender } from './faculty.interfach';
 
 export const Gender: TGender[] = ['male', 'female', 'other'];
 

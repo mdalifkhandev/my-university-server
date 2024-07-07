@@ -129,7 +129,7 @@ const studentSchma = new Schema<TStudent, StudentModel>(
     },
     email: {
       type: String,
-      unique:true,
+      unique: true,
       required: [true, 'email is Required'],
       validate: {
         validator: (value: string) => {

@@ -1,4 +1,4 @@
-import { TSchedule } from "./OfferedCourse.interfach";
+import { TSchedule } from './OfferedCourse.interfach';
 
 export const hasTimeConflict = (
   assignedSchedules: TSchedule[],

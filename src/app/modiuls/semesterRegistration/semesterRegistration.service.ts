@@ -11,21 +11,18 @@ const createSemesterRegistrationIntoDB = async (
 ) => {
   const academicSemester = paylods?.academicSemester;
 
-
   //cheak any there any Upcoming and ongoing  alrsdy exixts
 
- const isThereAhyUpcomingOngoingSemester=await SemesterRegistration.findOne({
-  $or:[{status:'UPCOMING'},{status:'ONGOING'}]
+  const isThereAhyUpcomingOngoingSemester = await SemesterRegistration.findOne({
+    $or: [{ status: 'UPCOMING' }, { status: 'ONGOING' }],
+  });
 
- })
-
- if(isThereAhyUpcomingOngoingSemester){
-  throw new AppError(httpStatus.BAD_REQUEST,`There is alrady ${isThereAhyUpcomingOngoingSemester.status}`)
- }
-
-
-
-
+  if (isThereAhyUpcomingOngoingSemester) {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `There is alrady ${isThereAhyUpcomingOngoingSemester.status}`,
+    );
+  }
 
   const isSemesterRegistrationExists = await SemesterRegistration.findOne({
     academicSemester,
@@ -72,18 +69,21 @@ const updateSemesterRegistrationIntoDB = async (
   id: string,
   paylods: Partial<TSemesterRegistration>,
 ) => {
-  const isSemesterRegistrationExists=await SemesterRegistration.findById(id)
-  if(!isSemesterRegistrationExists){
-    throw new AppError(httpStatus.CONFLICT,`Semester is not found`)
+  const isSemesterRegistrationExists = await SemesterRegistration.findById(id);
+  if (!isSemesterRegistrationExists) {
+    throw new AppError(httpStatus.CONFLICT, `Semester is not found`);
   }
 
-  const currentSemesterStatus=isSemesterRegistrationExists?.status
+  const currentSemesterStatus = isSemesterRegistrationExists?.status;
 
-  if(currentSemesterStatus==='ENDED'){
-    throw new AppError(httpStatus.BAD_REQUEST,`The semestrt is alrady ${currentSemesterStatus}`)
+  if (currentSemesterStatus === 'ENDED') {
+    throw new AppError(
+      httpStatus.BAD_REQUEST,
+      `The semestrt is alrady ${currentSemesterStatus}`,
+    );
   }
 
-  const requestedStatus=paylods?.status
+  const requestedStatus = paylods?.status;
 
   if (
     currentSemesterStatus === RegistrationStatus.UPCOMING &&
@@ -105,15 +105,12 @@ const updateSemesterRegistrationIntoDB = async (
     );
   }
 
-
   const result = await SemesterRegistration.findByIdAndUpdate(id, paylods, {
     new: true,
     runValidators: true,
   });
 
   return result;
-
-
 };
 const deleteSemesterRegistrationFromDB = async (id: string) => {
   const result = await SemesterRegistration.findById(id);

@@ -16,7 +16,6 @@ const createUserFromtoDB = async (password: string, studentData: TStudent) => {
   //create user object
   const userData: Partial<TUser> = {};
 
-
   //if password in not given , use default password
   userData.password = password || (config.DEFAULT_PASSWORD as string);
 
@@ -48,13 +47,12 @@ const createUserFromtoDB = async (password: string, studentData: TStudent) => {
     studentData.id = newUser[0].id;
     studentData.user = newUser[0]._id;
 
-
     //cheak unik email
-    const currentEmail=studentData.email
-    const isExisitEmail=await Student.find()
-    const alluser=isExisitEmail.map(em=>(em.email===currentEmail))
-    if(alluser.includes(true)){
-      throw new AppError(httpStatus.BAD_REQUEST,`This email is requtred`)
+    const currentEmail = studentData.email;
+    const isExisitEmail = await Student.find();
+    const alluser = isExisitEmail.map((em) => em.email === currentEmail);
+    if (alluser.includes(true)) {
+      throw new AppError(httpStatus.BAD_REQUEST, `This email is requtred`);
     }
 
     const newStudent = await Student.create([studentData], { session });
@@ -87,18 +85,6 @@ const createUserFromtoDB = async (password: string, studentData: TStudent) => {
   // return { newStudent, newUser };
   // }
 };
-
-
-
-
-
-
-
-
-
-
-
-
 
 const createAdminIntoDB = async (password: string, payload: TAdmin) => {
   // create a user object
@@ -139,7 +125,7 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
     await session.endSession();
 
     return newAdmin;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (err: any) {
     await session.abortTransaction();
     await session.endSession();
@@ -149,5 +135,5 @@ const createAdminIntoDB = async (password: string, payload: TAdmin) => {
 
 export const UserService = {
   createUserFromtoDB,
-  createAdminIntoDB
+  createAdminIntoDB,
 };

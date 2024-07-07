@@ -1,13 +1,13 @@
-import httpStatus from "http-status";
-import AppError from "../../error/appEror";
-import { SemesterRegistration } from "../semesterRegistration/semesterRegistration.model";
-import { TOfferedCourse } from "./OfferedCourse.interfach";
-import { AcademicFaculty } from "../academicFaculty/academicFaculty.model";
-import { AcademicDepartment } from "../academicDepartment/academicDepartment.model";
-import { Course } from "../course/course.model";
-import { OfferedCourse } from "./OfferedCourse.model";
-import { hasTimeConflict } from "./OfferedCourse.utils";
-import QueryBuilder from "../../builder/QueryBuilder";
+import httpStatus from 'http-status';
+import AppError from '../../error/appEror';
+import { SemesterRegistration } from '../semesterRegistration/semesterRegistration.model';
+import { TOfferedCourse } from './OfferedCourse.interfach';
+import { AcademicFaculty } from '../academicFaculty/academicFaculty.model';
+import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
+import { Course } from '../course/course.model';
+import { OfferedCourse } from './OfferedCourse.model';
+import { hasTimeConflict } from './OfferedCourse.utils';
+import QueryBuilder from '../../builder/QueryBuilder';
 
 const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
   const {
@@ -178,7 +178,6 @@ const updateOfferedCourseIntoDB = async (
 
   const semesterRegistration = isOfferedCourseExists.semesterRegistration;
   // get the schedules of the faculties
-
 
   // Checking the status of the semester registration
   const semesterRegistrationStatus =

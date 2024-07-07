@@ -5,7 +5,6 @@ import { updateAdminValidationSchema } from '../Admin/admin.validation';
 import auth from '../../middlewere/auth';
 import { USER_ROLE } from '../users/user.constant';
 
-
 const router = express.Router();
 
 // router.get('/:id', FacultyControllers.getSingleFaculty);

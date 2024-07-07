@@ -1,9 +1,16 @@
-import { TBloodGroup, TGender } from "./admin.interface";
+import { TBloodGroup, TGender } from './admin.interface';
 
 export const Gender: TGender[] = ['male', 'female', 'other'];
-export const BloodGroup: TBloodGroup[] = ['A+', 'B+', 'A-', 'B-', 'AB-', 'AB+', 'O-', 'O+'];
-
-
+export const BloodGroup: TBloodGroup[] = [
+  'A+',
+  'B+',
+  'A-',
+  'B-',
+  'AB-',
+  'AB+',
+  'O-',
+  'O+',
+];
 
 export const AdminSearchableFields = [
   'email',

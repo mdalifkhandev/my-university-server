@@ -1,11 +1,11 @@
-import { Model } from "mongoose";
-import { USER_ROLE } from "./user.constant";
+import { Model } from 'mongoose';
+import { USER_ROLE } from './user.constant';
 
 export type TUser = {
   id: string;
   password: string;
   needsPasswordChange: boolean;
-  passwordChangedAt?:Date;
+  passwordChangedAt?: Date;
   role: 'admin' | 'student' | 'faculty';
   status: 'in-progress' | 'blocked';
   isDeleted: boolean;

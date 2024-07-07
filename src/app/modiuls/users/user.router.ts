@@ -9,7 +9,8 @@ import { USER_ROLE } from './user.constant';
 const router = e.Router();
 
 router.post(
-  '/create-student',auth(USER_ROLE.admin),
+  '/create-student',
+  auth(USER_ROLE.admin),
   validateRequest(createStudentValidationSchema),
   UserController.createStudent,
 );
@@ -26,6 +27,6 @@ router.post(
   // auth(USER_ROLE.admin),
   validateRequest(createAdminValidationSchema),
   UserController.createAdmin,
-)
+);
 
 export const UserRought = router;
