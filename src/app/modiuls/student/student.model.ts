@@ -148,7 +148,7 @@ const studentSchma = new Schema<TStudent, StudentModel>(
       required: [true, 'Contact no is Required'],
       trim: true,
     },
-    bloogGroup: {
+    bloodGroup: {
       type: String,
       enum: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'],
     },
