@@ -18,8 +18,9 @@ import { TAdmin } from '../Admin/admin.interface';
 import { Faculty } from '../Faculty/faculty.model';
 import { TFaculty } from '../Faculty/faculty.interfach';
 import { AcademicDepartment } from '../academicDepartment/academicDepartment.model';
+import { sendImageToCloudinary } from '../../utils/sendImageToCloudinary';
 
-const createStudentFromtoDB = async (password: string, payloads: TStudent) => {
+const createStudentFromtoDB = async (file:any,password: string, payloads: TStudent) => {
   //create user object
   const userData: Partial<TUser> = {};
 
@@ -52,9 +53,20 @@ const createStudentFromtoDB = async (password: string, payloads: TStudent) => {
 
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create student');
+    
     }
+
+    const imageName=`${userData?.id}${payloads?.name?.firstname}`
+    const path=file?.path
+    // const {secure_url}=await sendImageToCloudinary(imageName,path)
+    const cloudinaryImageDetails:any=await sendImageToCloudinary(imageName,path)
+    const secure_url=cloudinaryImageDetails?.secure_url
+  
+    
+
     payloads.id = newUser[0].id;
     payloads.user = newUser[0]._id;
+    payloads.profileImg = secure_url 
 
     //cheak unik email
     const currentEmail = payloads.email;
@@ -68,6 +80,9 @@ const createStudentFromtoDB = async (password: string, payloads: TStudent) => {
     if (!newStudent.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create student');
     }
+
+
+
 
     await session.commitTransaction();
     await session.endSession();
