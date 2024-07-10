@@ -78,5 +78,5 @@ export const AuthController = {
   changePassword,
   refreshToken,
   forgetPassword,
-  resetPassword
+  resetPassword,
 };

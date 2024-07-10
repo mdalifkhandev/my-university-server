@@ -23,7 +23,13 @@ const createStudent = catchAsync(async (req, res) => {
 const createFaculty = catchAsync(async (req, res) => {
   const { password, faculty: facultyData } = req.body;
 
-  const result = await UserService.createFacultyIntoDB(password, facultyData);
+  console.log(password, facultyData);
+  const result = await UserService.createFacultyIntoDB(
+    req.file,
+    password,
+    facultyData,
+  );
+  console.log(password, facultyData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -36,7 +42,11 @@ const createFaculty = catchAsync(async (req, res) => {
 const createAdmin = catchAsync(async (req, res) => {
   const { password, admin: adminData } = req.body;
 
-  const result = await UserService.createAdminIntoDB(password, adminData);
+  const result = await UserService.createAdminIntoDB(
+    req.file,
+    password,
+    adminData,
+  );
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -45,8 +55,6 @@ const createAdmin = catchAsync(async (req, res) => {
     data: result,
   });
 });
-
-
 
 const getMe = catchAsync(async (req, res) => {
   // const token = req.headers.authorization;
@@ -80,13 +88,10 @@ const changeStatus = catchAsync(async (req, res) => {
   });
 });
 
-
-
-
 export const UserController = {
   createStudent,
   createAdmin,
   createFaculty,
   getMe,
-  changeStatus
+  changeStatus,
 };

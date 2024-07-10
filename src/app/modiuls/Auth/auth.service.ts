@@ -204,8 +204,7 @@ const forgetPassword = async (userId: string) => {
   const forgatePasswordUILink = `${config.RESED_PASSWORD_UI_LINK}?id=${user.id}&token=${resetToken} `;
 
   console.log(forgatePasswordUILink);
-  sendEmail(user.email,forgatePasswordUILink)
-  
+  sendEmail(user.email, forgatePasswordUILink);
 
   // sendEmail(user.email, resetUILink);
 
@@ -272,5 +271,5 @@ export const AuthService = {
   changePasswordfromDB,
   refreshToken,
   forgetPassword,
-  resetPassword
+  resetPassword,
 };

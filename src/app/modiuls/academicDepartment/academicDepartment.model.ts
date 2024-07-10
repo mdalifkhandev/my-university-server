@@ -26,10 +26,7 @@ academicDepartmentSchema.pre('save', async function (next) {
   });
 
   if (isExisitDepartment) {
-    throw new AppError(
-      httpStatus.NOT_FOUND,
-      'The Department is Alrady Exisit m',
-    );
+    throw new AppError(httpStatus.NOT_FOUND, 'The Department is Alrady Exisit');
   }
   next();
 });

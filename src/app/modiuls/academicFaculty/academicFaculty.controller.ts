@@ -17,15 +17,17 @@ const createAcademicFaculty = catchAsync(async (req, res) => {
 });
 
 const getAllAcademicFacultyes = catchAsync(async (req, res) => {
-  const resualt = await AcademicFacultyService.getAllAcademicFacultyesFromDB();
+  const resualt = await AcademicFacultyService.getAllAcademicFacultyesFromDB(
+    req.query,
+  );
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'All Academic Feculty  Get successfully',
+    // meta: result.meta,
     data: resualt,
   });
 });
-//react-auth0-spa.tsx
 
 const getSingleAcademicFaculty = catchAsync(async (req, res) => {
   const fecultyId = req.params.fecultyId;

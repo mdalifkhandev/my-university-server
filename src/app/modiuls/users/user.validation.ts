@@ -13,5 +13,5 @@ const changeStatusValidationSchema = z.object({
 
 export const UserValidation = {
   UserValidationSchema,
-  changeStatusValidationSchema
+  changeStatusValidationSchema,
 };
