@@ -22,11 +22,17 @@ const getAllCousrseFromDB = async (query: Record<string, unknown>) => {
     .paginate()
     .fields();
   const resualt = await courseQuery.modelQuery;
-  return resualt;
+  const meta = await courseQuery.countTotal();
+  return {
+    resualt,
+    meta,
+  };
 };
 
 const getSingleCousrseFromDB = async (id: string) => {
-  const resualt = await Course.findById(id);
+  const resualt = await Course.findById(id).populate(
+    'preRequisiteCourses.course',
+  );
   return resualt;
 };
 
@@ -137,6 +143,13 @@ const assignFacultyesWithCourseInToDb = async (
   return resualt;
 };
 
+const getFacultiesWithCourseFromDB = async (courseId: string) => {
+  const result = await CourseFaculty.findOne({ course: courseId }).populate(
+    'faculties',
+  );
+  return result;
+};
+
 const removeFacultiesFromCourseFromDB = async (
   id: string,
   payload: Partial<TCourseFaculty>,
@@ -161,4 +174,5 @@ export const CourseServices = {
   updathCourseInToDB,
   assignFacultyesWithCourseInToDb,
   removeFacultiesFromCourseFromDB,
+  getFacultiesWithCourseFromDB,
 };

@@ -41,14 +41,6 @@ const logonUser = async (paylods: TLoginUser) => {
     role: user.role,
   };
 
-  // const assessToken=jwt.sign(
-  //     jwtPayload,
-  //     config.JWT_SECRET_ACCESS_KE as string,
-  //     {
-  //         expiresIn:'10h'
-  //     }
-  // )
-
   const accessToken = createToken(
     jwtPayload,
     config.JWT_SECRET_ACCESS_KE as string,
@@ -205,10 +197,6 @@ const forgetPassword = async (userId: string) => {
 
   console.log(forgatePasswordUILink);
   sendEmail(user.email, forgatePasswordUILink);
-
-  // sendEmail(user.email, resetUILink);
-
-  // console.log(resetUILink);
 };
 
 const resetPassword = async (

@@ -107,10 +107,6 @@ const studentSchma = new Schema<TStudent, StudentModel>(
       type: Schema.Types.ObjectId,
       ref: 'Users',
     },
-    password: {
-      type: String,
-      required: false,
-    },
     name: {
       type: studentNameSchma,
       required: [true, 'Name is Required'],
