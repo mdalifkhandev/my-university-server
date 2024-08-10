@@ -4,7 +4,7 @@ import { User } from '../users/user.model';
 import { TLoginUser } from './auth.interfach';
 import bcrypt from 'bcrypt';
 import config from '../../config';
-import { createToken } from './auth.utils';
+import { createToken, verifyToken } from './auth.utils';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { sendEmail } from '../../utils/sendMailinUser';
 
@@ -110,10 +110,7 @@ const changePasswordfromDB = async (
 
 const refreshToken = async (token: string) => {
   // checking if the given token is valid
-  const decoded = jwt.verify(
-    token,
-    config.JWT_SECRET_REFRESSRS_KE as string,
-  ) as JwtPayload;
+  const decoded = verifyToken(token, config.JWT_SECRET_REFRESSRS_KE as string);
 
   const { userId, iat } = decoded;
 

@@ -13,7 +13,7 @@ const superUser = {
 };
 
 const seedSuperAdmin = async () => {
-  const isSuperAdminExits = await User.findOne({ role: USER_ROLE.superAdmin });
+  const isSuperAdminExits = await User.findOne({ role: USER_ROLE.admin });
 
   if (!isSuperAdminExits) {
     await User.create(superUser);

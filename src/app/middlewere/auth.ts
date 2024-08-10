@@ -32,10 +32,16 @@ const auth = (...requiredRoll: TUserRole[]) => {
     //     next()
     // })
 
-    const decoded = jwt.verify(
-      token,
-      config.JWT_SECRET_ACCESS_KE as string,
-    ) as JwtPayload;
+    let decoded
+    try{
+
+      decoded = jwt.verify(
+        token,
+        config.JWT_SECRET_ACCESS_KE as string,
+      ) as JwtPayload;
+    }catch(error){
+      throw new AppError(httpStatus.UNAUTHORIZED,'Unauthroized')
+    }
 
     const { role, userId, iat } = decoded;
 

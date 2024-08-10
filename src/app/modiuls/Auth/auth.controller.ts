@@ -9,10 +9,10 @@ const loginUser = catchAsync(async (req, res) => {
   const resualt = await AuthService.logonUser(req.body);
   const { refreshToken, accessToken, needsPasswordChange } = resualt;
 
-  res.cookie('refresshTokon', refreshToken, {
+  res.cookie('refreshToken', refreshToken, {
     secure: config.NODE_NEW === 'production',
     httpOnly: true,
-    sameSite: 'none',
+    sameSite: true,
     maxAge: 100 * 60 * 60 * 24 * 365,
   });
 
@@ -42,7 +42,7 @@ const changePassword = catchAsync(async (req, res) => {
 });
 
 const refreshToken = catchAsync(async (req, res) => {
-  const { refreshToken } = req.cookies;
+  const  refreshToken  = req.cookies.refreshToken;
   const result = await AuthService.refreshToken(refreshToken);
 
   sendResponse(res, {
