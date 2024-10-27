@@ -17,9 +17,9 @@ export type TLocalGuardian = {
 };
 
 export type TUserName = {
-  firstname: string;
-  middname?: string;
-  lestname: string;
+  firstName: string;
+  middName?: string;
+  lestName: string;
 };
 
 export type TStudent = {

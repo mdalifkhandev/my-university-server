@@ -5,12 +5,13 @@ import catchAsync from '../../utils/catchAsync';
 
 const createStudent = catchAsync(async (req, res) => {
   const { password, Student: studentData } = req.body;
-
+  const file=req.file
   const resualt = await UserService.createStudentFromtoDB(
-    req.file,
+    file,
     password,
     studentData,
   );
+ 
 
   sendResponse(res, {
     statusCode: httpStatus.OK,

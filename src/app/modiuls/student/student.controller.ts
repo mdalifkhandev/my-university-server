@@ -12,7 +12,9 @@ const getAllStudents = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Student all Data Get now here',
-    data: resualt,
+    data:resualt.resualt,
+    meta:resualt.meta
+    
   });
 });
 

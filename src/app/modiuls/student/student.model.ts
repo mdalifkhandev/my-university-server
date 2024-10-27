@@ -9,7 +9,7 @@ import {
 } from './student.interfach';
 
 const studentNameSchma = new Schema<TUserName>({
-  firstname: {
+  firstName: {
     type: String,
     required: [true, 'First Name is Required'],
     // maxlength: [20, 'maximum length 20'],
@@ -23,11 +23,11 @@ const studentNameSchma = new Schema<TUserName>({
       message: '{VALUE} is not in capitalize format',
     },
   },
-  middname: {
+  middName: {
     type: String,
     trim: true,
   },
-  lestname: {
+  lestName: {
     type: String,
     required: [true, 'Lest Name is Required'],
     trim: true,
@@ -193,7 +193,7 @@ const studentSchma = new Schema<TStudent, StudentModel>(
 );
 
 studentSchma.virtual('fullName').get(function () {
-  return `${this?.name?.firstname} ${this?.name?.middname} ${this?.name?.lestname}`;
+  return `${this?.name?.firstName} ${this?.name?.middName} ${this?.name?.lestName}`;
 });
 
 //for creating custom instans method

@@ -10,7 +10,6 @@ import { User } from '../modiuls/users/user.model';
 const auth = (...requiredRoll: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization;
-
     if (!token) {
       throw new AppError(httpStatus.NOT_FOUND, `You have not authrize`);
     }
@@ -32,19 +31,20 @@ const auth = (...requiredRoll: TUserRole[]) => {
     //     next()
     // })
 
-    let decoded
-    try{
+    // let decoded
+    // try{
 
-      decoded = jwt.verify(
-        token,
-        config.JWT_SECRET_ACCESS_KE as string,
-      ) as JwtPayload;
-    }catch(error){
-      throw new AppError(httpStatus.UNAUTHORIZED,'Unauthroized')
-    }
+    //   decoded = jwt.verify(
+    //     token,
+    //     config.JWT_SECRET_ACCESS_KE as string,
+    //   ) as JwtPayload;
+    // }catch(error){
+    //   throw new AppError(httpStatus.UNAUTHORIZED,'Unauthroized')
+    // }
 
+    const decoded=jwt.verify(token,config.JWT_SECRET_ACCESS_KE as string) as JwtPayload
     const { role, userId, iat } = decoded;
-
+  
     if (requiredRoll && !requiredRoll.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,

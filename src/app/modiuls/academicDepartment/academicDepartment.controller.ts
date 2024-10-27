@@ -21,7 +21,9 @@ const getAllAcademicDepartment = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Academic Department Get All successfully',
-    data: resualt,
+    data:resualt.resualt,
+    meta:resualt.meta
+    
   });
 });
 

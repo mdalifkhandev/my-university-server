@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 const cteateStudentNamevaledationSchma = z.object({
-  firstname: z
+  firstName: z
     .string()
     .min(1, 'First Name is Required')
     .max(20)
@@ -13,14 +13,14 @@ const cteateStudentNamevaledationSchma = z.object({
       },
       { message: 'First name is not in capitalize format' },
     ),
-  middname: z.string().optional(),
-  lestname: z
+  middName: z.string().optional(),
+  lestName: z
     .string()
     .min(1, 'Last Name is Required')
     .max(20)
-    .refine((value) => /^[A-Za-z]+$/.test(value), {
-      message: 'Last name is not valid',
-    }),
+    // .refine((value) => /^[A-Za-z]+$/.test(value), {
+    //   message: 'Last name is not valid',
+    // }),
 });
 
 const createGurdianvalidationSchma = z.object({

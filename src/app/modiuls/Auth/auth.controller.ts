@@ -6,7 +6,7 @@ import config from '../../config';
 import AppError from '../../error/appEror';
 
 const loginUser = catchAsync(async (req, res) => {
-  const resualt = await AuthService.logonUser(req.body);
+  const resualt = await AuthService.loginUser(req.body);
   const { refreshToken, accessToken, needsPasswordChange } = resualt;
 
   res.cookie('refreshToken', refreshToken, {

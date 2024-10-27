@@ -8,7 +8,7 @@ import { createToken, verifyToken } from './auth.utils';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { sendEmail } from '../../utils/sendMailinUser';
 
-const logonUser = async (paylods: TLoginUser) => {
+const loginUser = async (paylods: TLoginUser) => {
   //cheak user
   const user = await User.findOne({ id: paylods?.id });
   if (!user) {
@@ -252,7 +252,7 @@ const resetPassword = async (
 };
 
 export const AuthService = {
-  logonUser,
+  loginUser,
   changePasswordfromDB,
   refreshToken,
   forgetPassword,

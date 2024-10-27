@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import mongoose from 'mongoose';
 import config from '../../config';
 import AppError from '../../error/appEror';
@@ -49,7 +50,7 @@ const createStudentFromtoDB = async (
     payloads.academicDepartment,
   );
   if (!academicDepartment) {
-    throw new AppError(400, 'Admission semester not found');
+    throw new AppError(400, 'Admission Department not found');
   }
 
   payloads.academicFaculty = academicDepartment.academicFaculty;
@@ -61,15 +62,17 @@ const createStudentFromtoDB = async (
     userData.id = await generateStudentId(
       admissionSemester as TAcademicSemester,
     );
-
+    
     const newUser = await User.create([userData], { session });
-
+    
     if (!newUser.length) {
       throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create student');
     }
-
+    
+  
     if (file) {
-      const imageName = `${userData?.id}${payloads?.name?.firstname}`;
+      const imageName = `${userData?.id}${payloads?.name?.firstName}`;
+      
       const path = file?.path;
       // const {secure_url}=await sendImageToCloudinary(imageName,path)
       const cloudinaryImageDetails: any = await sendImageToCloudinary(
@@ -77,8 +80,9 @@ const createStudentFromtoDB = async (
         path,
       );
       const secure_url = cloudinaryImageDetails?.secure_url;
-
+      
       payloads.profileImg = secure_url;
+
     }
     payloads.id = newUser[0].id;
     payloads.user = newUser[0]._id;
