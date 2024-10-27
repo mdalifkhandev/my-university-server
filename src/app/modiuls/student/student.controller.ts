@@ -14,7 +14,6 @@ const getAllStudents = catchAsync(async (req, res) => {
     message: 'Student all Data Get now here',
     data:resualt.resualt,
     meta:resualt.meta
-    
   });
 });
 
