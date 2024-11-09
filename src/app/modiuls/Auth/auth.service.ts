@@ -64,6 +64,8 @@ const changePasswordfromDB = async (
   payloads: JwtPayload,
   userPassword: { oldPassword: string; newPassword: string },
 ) => {
+  console.log(payloads);
+  
   //cheak user
   const user = await User.findOne({ id: payloads?.userId });
   if (!user) {
@@ -192,7 +194,7 @@ const forgetPassword = async (userId: string) => {
   // const resetUILink = `${config.reset_pass_ui_link}?id=${user.id}&token=${resetToken} `;
   const forgatePasswordUILink = `${config.RESED_PASSWORD_UI_LINK}?id=${user.id}&token=${resetToken} `;
 
-  console.log(forgatePasswordUILink);
+
   sendEmail(user.email, forgatePasswordUILink);
 };
 
@@ -228,7 +230,6 @@ const resetPassword = async (
   //localhost:3000?id=A-0001&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJBLTAwMDEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3MDI4NTA2MTcsImV4cCI6MTcwMjg1MTIxN30.-T90nRaz8-KouKki1DkCSMAbsHyb9yDi0djZU3D6QO4
 
   if (payload.id !== decoded.userId) {
-    console.log(payload.id, decoded.userId);
     throw new AppError(httpStatus.FORBIDDEN, 'You are forbidden!');
   }
 

@@ -10,9 +10,9 @@ import { studentSearchAbleFields } from './student.constant';
 const getAllStudentFromDB = async (query: Record<string, unknown>) => {
   const studentQuery = new QueryBuilder(
     Student.find()
-      .populate('admissionSemester')
-      .populate('user')
-      .populate('academicDepartment academicFaculty'),
+    .populate('user')
+    .populate('admissionSemester')
+    .populate('academicDepartment academicFaculty'),
     query,
   )
     .search(studentSearchAbleFields)
@@ -29,6 +29,8 @@ const getAllStudentFromDB = async (query: Record<string, unknown>) => {
 };
 
 const getSingleStudentFromDB = async (id: string) => {
+  console.log(id);
+  
   const resualt = await Student.findById(id)
     .populate('admissionSemester')
     .populate('user')

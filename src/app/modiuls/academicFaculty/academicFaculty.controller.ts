@@ -25,7 +25,7 @@ const getAllAcademicFacultyes = catchAsync(async (req, res) => {
     success: true,
     message: 'All Academic Feculty  Get successfully',
     // meta: result.meta,
-    data: resualt,
+    data: resualt.reaualt,
   });
 });
 

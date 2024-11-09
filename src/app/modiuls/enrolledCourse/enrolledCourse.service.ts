@@ -1,15 +1,16 @@
+import { Course } from './../course/course.model';
+import { OfferedCourse } from './../OfferedCourse/OfferedCourse.model';
+import { SemesterRegistration } from './../semesterRegistration/semesterRegistration.model';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
-import mongoose from 'mongoose';
-import { OfferedCourse } from '../OfferedCourse/OfferedCourse.model';
-import { SemesterRegistration } from '../semesterRegistration/semesterRegistration.model';
-import { Student } from '../student/student.model';
-import EnrolledCourse from './enrolledCourse.model';
+import mongoose from 'mongoose'
 import { calculateGradeAndPoints } from './enrolledCourse.utils';
 import { TEnrolledCourse } from './enrolledCourse.interfach';
 import AppError from '../../error/appEror';
-import { Course } from '../course/course.model';
 import { Faculty } from '../Faculty/faculty.model';
+import QueryBuilder from '../../builder/QueryBuilder';
+import { Student } from '../student/student.model';
+import EnrolledCoutse from './enrolledCourse.model';
 
 const createEnrolledCourseIntoDB = async (
   userId: string,
@@ -39,7 +40,7 @@ const createEnrolledCourseIntoDB = async (
   if (!student) {
     throw new AppError(httpStatus.NOT_FOUND, 'Student not found !');
   }
-  const isStudentAlreadyEnrolled = await EnrolledCourse.findOne({
+  const isStudentAlreadyEnrolled = await EnrolledCoutse.findOne({
     semesterRegistration: isOfferedCourseExists?.semesterRegistration,
     offeredCourse,
     student: student._id,
@@ -51,7 +52,7 @@ const createEnrolledCourseIntoDB = async (
 
   // check total credits exceeds maxCredit
   const course = await Course.findById(isOfferedCourseExists.course);
-  const currentCredit = course?.creadits;
+  const currentCredit = course?.credits;
 
   const semesterRegistration = await SemesterRegistration.findById(
     isOfferedCourseExists.semesterRegistration,
@@ -59,7 +60,7 @@ const createEnrolledCourseIntoDB = async (
 
   const maxCredit = semesterRegistration?.maxCredit;
 
-  const enrolledCourses = await EnrolledCourse.aggregate([
+  const enrolledCourses = await EnrolledCoutse.aggregate([
     {
       $match: {
         semesterRegistration: isOfferedCourseExists.semesterRegistration,
@@ -106,8 +107,7 @@ const createEnrolledCourseIntoDB = async (
 
   try {
     session.startTransaction();
-    console.log(isOfferedCourseExists);
-    const result = await EnrolledCourse.create(
+    const result = await EnrolledCoutse.create(
       [
         {
           semesterRegistration: isOfferedCourseExists.semesterRegistration,
@@ -123,7 +123,6 @@ const createEnrolledCourseIntoDB = async (
       ],
       { session },
     );
-    console.log(isOfferedCourseExists.faculty);
     if (!result) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
@@ -179,7 +178,7 @@ const updateEnrolledCourseMarksIntoDB = async (
     throw new AppError(httpStatus.NOT_FOUND, 'Faculty not found !');
   }
 
-  const isCourseBelongToFaculty = await EnrolledCourse.findOne({
+  const isCourseBelongToFaculty = await EnrolledCoutse.findOne({
     semesterRegistration,
     offeredCourse,
     student,
@@ -217,7 +216,7 @@ const updateEnrolledCourseMarksIntoDB = async (
     }
   }
 
-  const result = await EnrolledCourse.findByIdAndUpdate(
+  const result = await EnrolledCoutse.findByIdAndUpdate(
     isCourseBelongToFaculty._id,
     modifiedData,
     {
@@ -228,7 +227,31 @@ const updateEnrolledCourseMarksIntoDB = async (
   return result;
 };
 
+const getMyEnrolledCoursesFromDB=async(studentId:string,query:Record<string,unknown>)=>{
+  const student=await Student.findOne({id:studentId})
+  if(!student){
+    throw new AppError(httpStatus.NOT_FOUND,'Student Not Found')
+  }
+
+  const enrollCourserQuery=new QueryBuilder(
+    EnrolledCoutse.find({student:student._id}).populate(
+      'semesterRegistration academicSemester academicFaculty academicDepartment offeredCourse course student faculty'),
+query,
+).filter().sort().paginate().fields()
+
+
+const resualt=await enrollCourserQuery.modelQuery
+const meta=await enrollCourserQuery.countTotal()
+return{
+  resualt,
+  meta
+}
+
+
+}
+
 export const EnrolledCourseServices = {
   createEnrolledCourseIntoDB,
   updateEnrolledCourseMarksIntoDB,
+  getMyEnrolledCoursesFromDB
 };

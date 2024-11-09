@@ -9,7 +9,7 @@ export type TCouse = {
   title: string;
   prefix: string;
   code: number;
-  creadits: number;
+  credits: number;
   isDeleted: boolean;
   preRequisiteCourses: [TPreRequisteCourses];
 };

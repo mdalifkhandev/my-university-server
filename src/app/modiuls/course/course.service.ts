@@ -7,6 +7,8 @@ import AppError from '../../error/appEror';
 import httpStatus from 'http-status';
 
 const createCourseFromDB = async (paylods: TCouse) => {
+  console.log(paylods);
+  
   const resualt = await Course.create(paylods);
   return resualt;
 };
@@ -140,13 +142,18 @@ const assignFacultyesWithCourseInToDb = async (
     { course: id, $addToSet: { faculties: { $each: paylods } } },
     { upsert: true, new: true },
   );
+  console.log(resualt);
+  
   return resualt;
 };
 
 const getFacultiesWithCourseFromDB = async (courseId: string) => {
+  
+  // const result = await CourseFaculty.find()
   const result = await CourseFaculty.findOne({ course: courseId }).populate(
     'faculties',
   );
+  console.log(courseId,result);
   return result;
 };
 

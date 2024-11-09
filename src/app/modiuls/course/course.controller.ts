@@ -4,6 +4,7 @@ import sendResponse from '../../utils/sendResponse';
 import { CourseServices } from './course.service';
 
 const createCourses = catchAsync(async (req, res) => {
+  
   const resualt = await CourseServices.createCourseFromDB(req.body);
 
   sendResponse(res, {
@@ -21,7 +22,8 @@ const getAllCourse = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Course all Data Get now here',
-    data: resualt,
+    data: resualt.resualt,
+    meta:resualt.meta
   });
 });
 
@@ -80,9 +82,7 @@ const assignFacultyesWithCourse = catchAsync(async (req, res) => {
 
 const getFacultiesWithCourse = catchAsync(async (req, res) => {
   const { courseId } = req.params;
-
   const result = await CourseServices.getFacultiesWithCourseFromDB(courseId);
-
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

@@ -1,31 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
-import QueryBuilder from '../../builder/QueryBuilder';
 import { Faculty } from './faculty.model';
-import { FacultySearchableFields } from './faculty.constant';
 import { TFaculty } from './faculty.interfach';
 import AppError from '../../error/appEror';
 import { User } from '../users/user.model';
 
-const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
-  const facultyQuery = new QueryBuilder(
-    Faculty.find().populate('academicDepartment'),
-    query,
-  )
-    .search(FacultySearchableFields)
-    .filter()
-    .sort()
-    .paginate()
-    .fields();
+// const getAllFacultiesFromDB = async (query: Record<string, unknown>) => {
+  // const facultyQuery = new QueryBuilder(
+  //   Faculty.find().populate('academicDepartment'),
+  //   query,
+  // )
+//     .search(FacultySearchableFields)
+//     .filter()
+//     .sort()
+//     .paginate()
+//     .fields();
+// console.log(facultyQuery);
 
-  const result = await facultyQuery.modelQuery;
-  const meta = await facultyQuery.countTotal();
-  return {
-    meta,
-    result,
-  };
-};
+  // const result = await facultyQuery.modelQuery;
+  // const meta = await facultyQuery.countTotal();
+  // return {
+  //   meta,
+  //   result,
+  // };
+// };
+const getAllFacultiesFromDB = async () => {
+  const resualt=await Faculty.find()
+  return resualt
+}
 
 const getSingleFacultyFromDB = async (id: string) => {
   const result = await Faculty.findById(id).populate(

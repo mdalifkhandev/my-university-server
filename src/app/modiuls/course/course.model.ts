@@ -35,10 +35,10 @@ const courseSchema = new Schema<TCouse>({
   },
   code: {
     type: Number,
-    trim: true,
+    // trim: true,
     required: true,
   },
-  creadits: {
+  credits: {
     type: Number,
     trim: true,
     required: true,

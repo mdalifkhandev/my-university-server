@@ -7,7 +7,6 @@ import { EnrolledCourseValidations } from './enrolledCourse.validation';
 import { USER_ROLE } from '../users/user.constant';
 
 const router = express.Router();
-
 router.post(
   '/create-enrolled-course',
   auth('student'),
@@ -18,11 +17,11 @@ router.post(
   EnrolledCourseControllers.createEnrolledCourse,
 );
 
-// router.get(
-//   '/my-enrolled-courses',
-//   auth(USER_ROLE.student),
-//   EnrolledCourseControllers.getMyEnrolledCourses,
-// );
+router.get(
+  '/my-enrolled-courses',
+  auth(USER_ROLE.student),
+  EnrolledCourseControllers.getMyEnrolledCourses,
+);
 
 router.patch(
   '/update-enrolled-course-marks',

@@ -132,6 +132,12 @@ const createOfferedCourseIntoDB = async (payload: TOfferedCourse) => {
   return result;
 };
 
+
+
+
+
+
+
 const getAllOfferedCoursesFromDB = async (query: Record<string, unknown>) => {
   const offeredCourseQuery = new QueryBuilder(OfferedCourse.find(), query)
     .filter()
@@ -434,6 +440,14 @@ const deleteOfferedCourseFromDB = async (id: string) => {
 
   return result;
 };
+
+
+
+
+
+
+
+
 
 export const OfferedCourseServices = {
   createOfferedCourseIntoDB,
